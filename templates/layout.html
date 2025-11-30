@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visit Bhutan</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
+    <script defer src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#view">Skip to content</a>
+
+    <!-- NAVBAR -->
+    <nav class="navbar" aria-label="Primary">
+      <div class="navbar__inner">
+        <a class="brand" href="{{ url_for('main.home') }}" aria-label="Visit Bhutan home">
+          <span class="brand__mark" aria-hidden="true">
+            <!-- keep your lotus svg or logo here -->
+            ✿
+          </span>
+          <span class="brand__wordmark">
+            <strong>visit</strong>
+            <span>BHUTAN</span>
+          </span>
+        </a>
+
+        <div class="navlinks" role="navigation" aria-label="Main links">
+          <a href="{{ url_for('main.about') }}" aria-current="{{ 'page' if active=='about' else 'false' }}">About Bhutan</a>
+          <a href="{{ url_for('main.plan') }}" aria-current="{{ 'page' if active=='plan' else 'false' }}">Plan your trip</a>
+          <a href="{{ url_for('main.things') }}" aria-current="{{ 'page' if active=='things' else 'false' }}">Things to do</a>
+          <a href="{{ url_for('main.calendar') }}" aria-current="{{ 'page' if active=='calendar' else 'false' }}">Bhutan Calendar</a>
+          <a href="{{ url_for('main.offers') }}" aria-current="{{ 'page' if active=='offers' else 'false' }}">Travel Offers</a>
+        </div>
+
+        <div class="nav-right">
+          <span class="pill">Accessibility</span>
+          <span class="pill">EN • English</span>
+          <button class="cta" type="button">eVisa</button>
+          <button class="icon-btn" type="button" aria-label="Account">👤</button>
+          <button class="icon-btn" type="button" aria-label="Search">🔍</button>
+          <button class="burger" data-burger aria-label="Open menu" aria-expanded="false">☰</button>
+        </div>
+      </div>
+
+      <div class="nav-mobile" data-mobile-nav data-open="false">
+        <div class="nav-mobile__panel" aria-label="Mobile menu">
+          <a href="{{ url_for('main.about') }}">About Bhutan</a>
+          <a href="{{ url_for('main.plan') }}">Plan your trip</a>
+          <a href="{{ url_for('main.things') }}">Things to do</a>
+          <a href="{{ url_for('main.calendar') }}">Bhutan Calendar</a>
+          <a href="{{ url_for('main.offers') }}">Travel Offers</a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- PAGE CONTENT -->
+    <main id="view" class="site-main" role="main" aria-live="polite">
+      {% include page %}
+    </main>
+
+    <!-- FOOTER (paste your footer HTML here) -->
+    <footer class="footer">
+      <!-- your existing footer markup -->
+    </footer>
+  </body>
+</html>

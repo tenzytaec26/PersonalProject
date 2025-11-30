@@ -1,0 +1,55 @@
+<section class="hero" aria-label="Featured content">
+  <div class="media" aria-label="Hero video">
+    <!-- Replace this with your real video (or use an <img>) -->
+    <video
+      muted
+      autoplay
+      loop
+      playsinline
+      poster="https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=1400&q=70"
+    >
+      <source src="" type="video/mp4" />
+    </video>
+
+    <div class="media__controls" aria-hidden="true">
+      <span style="min-width:38px">▶</span>
+      <div class="media__bar"><span></span></div>
+      <span>0:08</span>
+    </div>
+  </div>
+
+  <div class="card-stack">
+    <article class="feature-card" aria-label="Featured card">
+      <div class="feature-card__img">
+        <img
+          data-feature-img
+          src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=70"
+          alt="Featured experience"
+        />
+      </div>
+      <div class="feature-card__body">
+        <h2 data-feature-title>Paro Tshechu</h2>
+        <p data-feature-desc>
+          A vibrant festival with masked dances, music, and community celebrations in Paro.
+        </p>
+        <button class="feature-card__btn" type="button">
+          Discover
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+    </article>
+
+    <div class="carousel-controls" aria-label="Carousel controls">
+      <button class="round-btn" type="button" data-prev-card aria-label="Previous">
+        <span aria-hidden="true">←</span>
+      </button>
+      <button class="round-btn primary" type="button" data-next-card aria-label="Next">
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<div class="down-chev" aria-hidden="true">
+  <span style="font-size:22px">⌄</span>
+</div>
