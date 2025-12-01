@@ -1,6 +1,6 @@
+<!-- ============ HERO (VIDEO + FEATURE CARD) ============ -->
 <section class="hero" aria-label="Featured content">
   <div class="media" aria-label="Hero video">
-    <!-- Replace this with your real video (or use an <img>) -->
     <video
       muted
       autoplay
@@ -33,8 +33,7 @@
           A vibrant festival with masked dances, music, and community celebrations in Paro.
         </p>
         <button class="feature-card__btn" type="button">
-          Discover
-          <span aria-hidden="true">→</span>
+          Discover <span aria-hidden="true">→</span>
         </button>
       </div>
     </article>
@@ -53,3 +52,261 @@
 <div class="down-chev" aria-hidden="true">
   <span style="font-size:22px">⌄</span>
 </div>
+
+<!-- ============ SPOTLIGHT ============ -->
+<section class="spotlight" aria-label="Featured spotlight">
+  <div class="spotlight__wrap">
+    <div class="spotlight__card">
+      <!-- LEFT PANEL -->
+      <div class="spotlight__panel">
+        <div class="spotlight__meta">
+          <div class="spotlight__date" aria-label="Event date range">
+            <span class="spotlight__date-top" data-s-date-top>26</span>
+            <span class="spotlight__date-mid" data-s-date-mid>Nov 25</span>
+            <span class="spotlight__date-to">to</span>
+            <span class="spotlight__date-bot" data-s-date-bot>17 Jan 26</span>
+          </div>
+
+          <span class="spotlight__chip" data-s-category>Art & Culture</span>
+        </div>
+
+        <h1 class="spotlight__title" data-s-title>Brouq 2026</h1>
+
+        <p class="spotlight__desc" data-s-desc>
+          Brouq 2026 offers an exciting desert escape with glamping, dining, culture, and thrilling activities
+        </p>
+
+        <button class="spotlight__btn" type="button">
+          Learn more
+        </button>
+      </div>
+
+      <!-- RIGHT IMAGE -->
+      <div class="spotlight__media" aria-label="Spotlight image">
+        <img
+          data-s-img
+          src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=70"
+          alt="Featured experience"
+          loading="eager"
+        />
+      </div>
+    </div>
+
+    <!-- THUMBNAILS + ARROWS -->
+    <div class="spotlight__controls">
+      <div class="spotlight__thumbs" aria-label="Spotlight thumbnails">
+        <button class="thumb is-active" type="button" data-s-thumb="0" aria-label="Slide 1 thumbnail">
+          <img
+            src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=70"
+            alt=""
+          />
+        </button>
+        <button class="thumb" type="button" data-s-thumb="1" aria-label="Slide 2 thumbnail">
+          <img
+            src="https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=600&q=70"
+            alt=""
+          />
+        </button>
+        <button class="thumb" type="button" data-s-thumb="2" aria-label="Slide 3 thumbnail">
+          <img
+            src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=600&q=70"
+            alt=""
+          />
+        </button>
+      </div>
+
+      <div class="spotlight__arrows" aria-label="Spotlight navigation">
+        <button class="spotlight__arrow" type="button" data-s-prev aria-label="Previous">
+          ←
+        </button>
+        <button class="spotlight__arrow" type="button" data-s-next aria-label="Next">
+          →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EVENTS EXPLORER ============ -->
+<section class="explorer" aria-label="Explore events">
+  <div class="explorer__top">
+    <div class="explorer__count" aria-label="Events found"><span data-events-count>96</span> events found</div>
+
+    <label class="search" aria-label="Search events">
+      <span class="search__icon">🔍</span>
+      <input class="search__input" type="search" placeholder="Search events" />
+    </label>
+  </div>
+
+  <div class="explorer__grid">
+    <!-- SIDEBAR -->
+    <aside class="filters" aria-label="Filters">
+      <div class="filters__section">
+        <div class="filters__head">
+          <h3>Category</h3>
+          <span class="filters__chev">^</span>
+        </div>
+
+        <div class="filters__chips">
+          <label class="check"><input type="checkbox" /> <span>Art & Culture</span></label>
+          <label class="check"><input type="checkbox" /> <span>Business</span></label>
+          <label class="check"><input type="checkbox" /> <span>Community</span></label>
+          <label class="check"><input type="checkbox" /> <span>Conference</span></label>
+          <label class="check"><input type="checkbox" /> <span>Entertainment</span></label>
+          <label class="check"><input type="checkbox" /> <span>Events</span></label>
+          <label class="check"><input type="checkbox" /> <span>Exhibition</span></label>
+          <label class="check"><input type="checkbox" /> <span>Family</span></label>
+          <label class="check"><input type="checkbox" /> <span>Festival</span></label>
+          <label class="check"><input type="checkbox" /> <span>Food & Beverage</span></label>
+          <label class="check"><input type="checkbox" /> <span>Lifestyle</span></label>
+          <label class="check"><input type="checkbox" /> <span>Music</span></label>
+          <label class="check"><input type="checkbox" /> <span>Shopping</span></label>
+          <label class="check"><input type="checkbox" /> <span>Sports</span></label>
+        </div>
+      </div>
+
+      <div class="filters__section">
+        <div class="filters__head">
+          <h3>Type</h3>
+          <span class="filters__chev">^</span>
+        </div>
+
+        <div class="type-row">
+          <button class="seg is-active" type="button">All</button>
+          <button class="seg" type="button">Free</button>
+          <button class="seg" type="button">Paid</button>
+        </div>
+      </div>
+
+      <div class="filters__section">
+        <div class="filters__head">
+          <h3>Date</h3>
+          <span class="filters__chev">^</span>
+        </div>
+
+        <label class="date-input">
+          <input type="text" placeholder="Select a date" />
+          <span>📅</span>
+        </label>
+
+        <div class="type-row">
+          <button class="seg is-active" type="button">All</button>
+          <button class="seg" type="button">Today</button>
+          <button class="seg" type="button">This week</button>
+        </div>
+
+        <div class="type-row">
+          <button class="seg" type="button">Next 30 days</button>
+          <button class="seg" type="button">Next 3 months</button>
+        </div>
+
+        <div class="type-row">
+          <button class="seg" type="button">Next 6 months</button>
+        </div>
+      </div>
+
+      <div class="filters__section filters__pdf">
+        <p>Generated PDF will contain<br />no more than 48 events</p>
+        <button class="pdf-btn" type="button">Generate PDF</button>
+      </div>
+    </aside>
+
+    <!-- EVENT CARDS -->
+    <div class="cards" aria-label="Event cards">
+      <article class="event-card">
+        <div class="event-card__img">
+          <img src="https://images.unsplash.com/photo-1521334726092-b509a19597c1?auto=format&fit=crop&w=1200&q=70" alt="Event image" />
+          <div class="event-card__date">
+            <span>30</span>
+            <small>Nov</small>
+          </div>
+        </div>
+
+        <div class="event-card__body">
+          <div class="event-card__loc">📍 Lusail International Circuit</div>
+          <h4>Metallica at F1 Bhutan Airways Grand Prix 2025</h4>
+          <p>Get ready to rock! A night of speed and sound...</p>
+          <div class="event-card__tags">
+            <span class="tag">Music</span>
+          </div>
+          <button class="event-card__btn" type="button">View more</button>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-card__img">
+          <img src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1200&q=70" alt="Event image" />
+          <div class="event-card__date">
+            <span>01</span>
+            <small>Dec</small>
+          </div>
+        </div>
+
+        <div class="event-card__body">
+          <div class="event-card__loc">📍 Thimphu Downtown</div>
+          <h4>Bhutan Winter Lights Festival</h4>
+          <p>Installations, performances, and family fun...</p>
+          <div class="event-card__tags">
+            <span class="tag">Festival</span><span class="tag">Free</span>
+          </div>
+          <button class="event-card__btn" type="button">View more</button>
+        </div>
+      </article>
+
+      <article class="event-card">
+        <div class="event-card__img">
+          <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=70" alt="Event image" />
+          <div class="event-card__date">
+            <span>01</span>
+            <small>Dec</small>
+          </div>
+        </div>
+
+        <div class="event-card__body">
+          <div class="event-card__loc">📍 Paro</div>
+          <h4>16 Nations, One Spirit, Two Islands</h4>
+          <p>Enjoy screenings, games, and family experiences...</p>
+          <div class="event-card__tags">
+            <span class="tag">Festival</span><span class="tag">Free</span>
+          </div>
+          <button class="event-card__btn" type="button">View more</button>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <div class="pager" aria-label="Pagination">
+    <button class="pager__arrow" type="button" aria-label="Previous page">←</button>
+    <button class="pager__page is-active" type="button">1</button>
+    <button class="pager__page" type="button">2</button>
+    <button class="pager__page" type="button">3</button>
+    <span class="pager__dots">…</span>
+    <button class="pager__page" type="button">11</button>
+    <button class="pager__arrow" type="button" aria-label="Next page">→</button>
+  </div>
+</section>
+
+<!-- ============ CALENDAR CTA BUTTON ============ -->
+<section class="cta-row" aria-label="Calendar download">
+  <button class="cta-maroon" type="button">Download your December calendar</button>
+</section>
+
+<!-- ============ BIG BANNER ============ -->
+<section class="banner" aria-label="Feature your events">
+  <div class="banner__img">
+    <img
+      src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=2000&q=70"
+      alt="City lights at night"
+      loading="lazy"
+    />
+  </div>
+
+  <div class="banner__overlay">
+    <h2>Feature your events<br />on Bhutan Calendar</h2>
+    <p>
+      Looking to feature your business or leisure events on Bhutan Calendar to reach local and international audiences?
+      Follow these steps and apply to get featured with us.
+    </p>
+    <button class="cta-maroon" type="button">Register here</button>
+  </div>
+</section>
