@@ -128,13 +128,13 @@
 </section>
 
 <!-- ============ EVENTS EXPLORER ============ -->
-<section class="explorer" aria-label="Explore events">
+<section class="explorer" aria-label="Explore events" data-events-explorer>
   <div class="explorer__top">
     <div class="explorer__count" aria-label="Events found"><span data-events-count>96</span> events found</div>
 
     <label class="search" aria-label="Search events">
       <span class="search__icon">🔍</span>
-      <input class="search__input" type="search" placeholder="Search events" />
+      <input class="search__input" type="search" placeholder="Search events" data-search />
     </label>
   </div>
 
@@ -148,20 +148,20 @@
         </div>
 
         <div class="filters__chips">
-          <label class="check"><input type="checkbox" /> <span>Art & Culture</span></label>
-          <label class="check"><input type="checkbox" /> <span>Business</span></label>
-          <label class="check"><input type="checkbox" /> <span>Community</span></label>
-          <label class="check"><input type="checkbox" /> <span>Conference</span></label>
-          <label class="check"><input type="checkbox" /> <span>Entertainment</span></label>
-          <label class="check"><input type="checkbox" /> <span>Events</span></label>
-          <label class="check"><input type="checkbox" /> <span>Exhibition</span></label>
-          <label class="check"><input type="checkbox" /> <span>Family</span></label>
-          <label class="check"><input type="checkbox" /> <span>Festival</span></label>
-          <label class="check"><input type="checkbox" /> <span>Food & Beverage</span></label>
-          <label class="check"><input type="checkbox" /> <span>Lifestyle</span></label>
-          <label class="check"><input type="checkbox" /> <span>Music</span></label>
-          <label class="check"><input type="checkbox" /> <span>Shopping</span></label>
-          <label class="check"><input type="checkbox" /> <span>Sports</span></label>
+          <label class="check"><input type="checkbox" value="Art & Culture" name="Category"/> <span>Art & Culture</span></label>
+          <label class="check"><input type="checkbox" value="Business" name="category"/> <span>Business</span></label>
+          <label class="check"><input type="checkbox" value="Community" name="category"/> <span>Community</span></label>
+          <label class="check"><input type="checkbox" value="Conference" name="category"/> <span>Conference</span></label>
+          <label class="check"><input type="checkbox" value="Entertainment" name="category"/> <span>Entertainment</span></label>
+          <label class="check"><input type="checkbox" value="Events" name="category"/> <span>Events</span></label>
+          <label class="check"><input type="checkbox" value="Exhibition" name="category"/> <span>Exhibition</span></label>
+          <label class="check"><input type="checkbox" value="Family" name="category"/> <span>Family</span></label>
+          <label class="check"><input type="checkbox" value="Festival" name="category"/> <span>Festival</span></label>
+          <label class="check"><input type="checkbox" value="Food & Beverage" name="category"/> <span>Food & Beverage</span></label>
+          <label class="check"><input type="checkbox" value="Lifestyle" name="category"/> <span>Lifestyle</span></label>
+          <label class="check"><input type="checkbox" value="Music" name="category"/> <span>Music</span></label>
+          <label class="check"><input type="checkbox" value="Shopping" name="category"/> <span>Shopping</span></label>
+          <label class="check"><input type="checkbox" value="Sports" name="category"/> <span>Sports</span></label>
         </div>
       </div>
 
@@ -171,11 +171,12 @@
           <span class="filters__chev">^</span>
         </div>
 
-        <div class="type-row">
-          <button class="seg is-active" type="button">All</button>
-          <button class="seg" type="button">Free</button>
-          <button class="seg" type="button">Paid</button>
+        <div class="type-row" data-filter-group="type">
+          <button class="seg is-active" type="button" data-type="all">All</button>
+          <button class="seg" type="button" data-type="free">Free</button>
+          <button class="seg" type="button" data-type="paid">Paid</button>
         </div>
+
       </div>
 
       <div class="filters__section">
@@ -189,18 +190,18 @@
           <span>📅</span>
         </label>
 
-        <div class="type-row">
+        <div class="type-row" data-filter-group="date">
           <button class="seg is-active" type="button">All</button>
           <button class="seg" type="button">Today</button>
           <button class="seg" type="button">This week</button>
         </div>
 
-        <div class="type-row">
+        <div class="type-row" date-filter-group="date">
           <button class="seg" type="button">Next 30 days</button>
           <button class="seg" type="button">Next 3 months</button>
         </div>
 
-        <div class="type-row">
+        <div class="type-row" date-filter-group="date">
           <button class="seg" type="button">Next 6 months</button>
         </div>
       </div>
@@ -213,7 +214,7 @@
 
     <!-- EVENT CARDS -->
     <div class="cards" aria-label="Event cards">
-      <article class="event-card">
+      <article class="event-card" data-tags="Music" data-type="paid" data-date="2025-11-30">
         <div class="event-card__img">
           <img src="https://images.unsplash.com/photo-1521334726092-b509a19597c1?auto=format&fit=crop&w=1200&q=70" alt="Event image" />
           <div class="event-card__date">
@@ -233,7 +234,7 @@
         </div>
       </article>
 
-      <article class="event-card">
+      <article class="event-card" data-tags="Festival" data-type="free" data-date="2025-12-01">
         <div class="event-card__img">
           <img src="https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1200&q=70" alt="Event image" />
           <div class="event-card__date">
@@ -253,7 +254,7 @@
         </div>
       </article>
 
-      <article class="event-card">
+      <article class="event-card" data-tags="Festival" data-type="free" data-date="2025-12-01">
         <div class="event-card__img">
           <img src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=70" alt="Event image" />
           <div class="event-card__date">

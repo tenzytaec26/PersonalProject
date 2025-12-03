@@ -1,0 +1,97 @@
+<section class="dash">
+  <header class="dash__hero">
+    <h1>Welcome {{ current_user.first_name or current_user.email.split('@')[0] }},</h1>
+    <p>you are now signed in! The first step towards personalising your visit.</p>
+  </header>
+
+  <div class="dash__grid">
+    <!-- Sidebar -->
+    <aside class="dash__side" aria-label="Account navigation">
+      <div class="dash__sideTop">
+        <div class="dash__sideTitle">
+          <span class="dash__homeIcon" aria-hidden="true">⌂</span>
+          <span>My Bhutan</span>
+        </div>
+      </div>
+
+      <div class="dash__section">
+        <h3>My profile</h3>
+
+        <a class="dash__link" href="#">
+          <span class="dash__linkIcon" aria-hidden="true">👤</span>
+          Personal Settings
+        </a>
+
+        <a class="dash__link" href="#">
+          <span class="dash__linkIcon" aria-hidden="true">⚙️</span>
+          Preferences
+        </a>
+
+        <a class="dash__link" href="#">
+          <span class="dash__linkIcon" aria-hidden="true">🎟️</span>
+          My Deals &amp; Offers
+        </a>
+      </div>
+
+      <div class="dash__signout">
+        <form method="POST" action="{{ url_for('main.logout') }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="dash__signoutBtn" type="submit">
+            <span aria-hidden="true">⎋</span> Sign out
+          </button>
+        </form>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="dash__main">
+      <section class="dashCard">
+        <h2>Plan your trip</h2>
+
+        <div class="dashCard__row">
+          <img
+            class="dashCard__img"
+            src="https://images.unsplash.com/photo-1544735716-2d0bcb6f1d84?auto=format&fit=crop&w=1200&q=70"
+            alt="Bhutan scenery"
+            loading="lazy"
+          />
+
+          <div class="dashCard__body">
+            <h3>An ideal holiday awaits</h3>
+            <p>
+              From checklists and stay options to tailor-made itineraries and restaurant recommendations,
+              we’ve got you covered.
+            </p>
+          </div>
+
+          <a class="dashCard__cta" href="{{ url_for('main.plan') }}">Start planning</a>
+        </div>
+      </section>
+
+      <section class="dashLock">
+        <h2>Exciting Events from Bhutan Calendar</h2>
+        <button class="dashLock__seeAll" type="button">See all</button>
+
+        <h3 class="dashLock__sub">Events happening this week you should not miss!</h3>
+        <div class="dashLock__box">
+          <div class="dashLock__icon" aria-hidden="true">☑︎</div>
+          <div class="dashLock__text">
+            <strong>Personalise your events</strong>
+            <p>You can personalise the events you see here by setting your travel preferences in your profile.</p>
+          </div>
+          <button class="dashLock__btn" type="button">Set preferences</button>
+        </div>
+
+        <h3 class="dashLock__sub">Recommended events for you</h3>
+        <div class="dashLock__box">
+          <div class="dashLock__icon" aria-hidden="true">☑︎</div>
+          <div class="dashLock__text">
+            <strong>Recommendations unlock after preferences</strong>
+            <p>Set preferences to get personalised recommendations.</p>
+          </div>
+          <button class="dashLock__btn" type="button">Set preferences</button>
+        </div>
+      </section>
+    </main>
+  </div>
+</section>

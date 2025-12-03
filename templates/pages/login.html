@@ -18,8 +18,19 @@
 
       <h1 class="auth__title">Log in to continue</h1>
       <p class="auth__subtitle">Unlock more by logging in to your Visit Bhutan account.</p>
+      
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="auth__alerts" role="status" aria-live="polite">
+            {% for category, message in messages %}
+              <div class="auth__alert auth__alert--{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
 
-      <form class="auth__form" method="post" action="{{ url_for('main.login') }}" novalidate>
+
+      <form class="auth__form" method="post" action="{{ url_for('main.login', next=request.args.get('next')) }}" novalidate>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <label class="field">
           <span class="field__label">Email</span>

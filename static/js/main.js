@@ -117,3 +117,154 @@ function bindSpotlightCarousel() {
 
   render();
 }
+
+(() => {
+  const explorer = document.querySelector("[data-events-explorer]");
+  if (!explorer) return;
+
+  const countEl = explorer.querySelector("[data-events-count]") || document.querySelector("[data-events-count]");
+  const searchEl = explorer.querySelector("[data-search]");
+  const cards = () => Array.from(document.querySelectorAll(".cards .event-card"));
+
+  const state = {
+    categories: new Set(),
+    type: "all",   // all|free|paid
+    date: "all",   // all|today|week|next30|next3m|next6m
+    q: "",
+  };
+
+  // --- helpers ---
+  const toLower = (s) => (s || "").toString().toLowerCase();
+
+  function parseISODate(s) {
+    // Expects YYYY-MM-DD
+    if (!s) return null;
+    const [y, m, d] = s.split("-").map(Number);
+    if (!y || !m || !d) return null;
+    return new Date(y, m - 1, d);
+  }
+
+  function inDateBucket(eventDate, bucket) {
+    if (bucket === "all") return true;
+    if (!eventDate) return false;
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const end = new Date(today);
+    if (bucket === "today") {
+      return eventDate.getTime() === today.getTime();
+    }
+    if (bucket === "week") {
+      end.setDate(end.getDate() + 7);
+      return eventDate >= today && eventDate <= end;
+    }
+    if (bucket === "next30") {
+      end.setDate(end.getDate() + 30);
+      return eventDate >= today && eventDate <= end;
+    }
+    if (bucket === "next3m") {
+      end.setDate(end.getDate() + 90);
+      return eventDate >= today && eventDate <= end;
+    }
+    if (bucket === "next6m") {
+      end.setDate(end.getDate() + 180);
+      return eventDate >= today && eventDate <= end;
+    }
+    return true;
+  }
+
+  function setActive(groupName, clickedBtn) {
+    // For date you have multiple rows; handle all rows with same group
+    document.querySelectorAll(`[data-filter-group="${groupName}"] .seg`).forEach((b) => {
+      b.classList.remove("is-active");
+    });
+    clickedBtn.classList.add("is-active");
+  }
+
+  function applyFilters() {
+    let shown = 0;
+
+    const q = toLower(state.q);
+
+    for (const card of cards()) {
+      const tags = (card.dataset.tags || "")
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean);
+
+      const type = toLower(card.dataset.type || "all");
+      const eventDate = parseISODate(card.dataset.date);
+
+      // Category: if none selected -> pass, else must match at least one
+      const categoryPass =
+        state.categories.size === 0 ||
+        tags.some((t) => state.categories.has(t));
+
+      // Type: all/free/paid
+      const typePass =
+        state.type === "all" ||
+        (state.type === "free" && type === "free") ||
+        (state.type === "paid" && type === "paid");
+
+      // Date bucket
+      const datePass = inDateBucket(eventDate, state.date);
+
+      // Search: match title/location/text
+      const text = toLower(card.textContent);
+      const searchPass = !q || text.includes(q);
+
+      const visible = categoryPass && typePass && datePass && searchPass;
+
+      card.style.display = visible ? "" : "none";
+      if (visible) shown += 1;
+    }
+
+    if (countEl) countEl.textContent = String(shown);
+  }
+
+  // --- listeners ---
+
+  // Category checkboxes
+  explorer.addEventListener("change", (e) => {
+    const el = e.target;
+    if (el.matches('input[type="checkbox"][name="category"]')) {
+      if (el.checked) state.categories.add(el.value);
+      else state.categories.delete(el.value);
+      applyFilters();
+    }
+  });
+
+  // Type/date segmented buttons
+  explorer.addEventListener("click", (e) => {
+    const btn = e.target.closest("button.seg");
+    if (!btn) return;
+
+    if (btn.dataset.type) {
+      state.type = btn.dataset.type;
+      setActive("type", btn);
+      applyFilters();
+    }
+
+    if (btn.dataset.date) {
+      state.date = btn.dataset.date;
+      setActive("date", btn);
+      applyFilters();
+    }
+  });
+
+  // Search (debounced)
+  let t = null;
+  if (searchEl) {
+    searchEl.addEventListener("input", () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        state.q = searchEl.value || "";
+        applyFilters();
+      }, 200);
+    });
+  }
+
+  // initial count
+  applyFilters();
+})();

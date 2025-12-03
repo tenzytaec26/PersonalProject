@@ -19,8 +19,21 @@
       <h1 class="auth__title">Create your Visit Bhutan account</h1>
       <p class="auth__subtitle">Get closer to your dream Bhutan holiday with your Visit Bhutan account.</p>
 
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="auth__alerts" role="status" aria-live="polite">
+            {% for category, message in messages %}
+              <div class="auth__alert auth__alert--{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+
       <form class="auth__form" method="post" action="{{ url_for('main.signup') }}" novalidate data-auth="signup">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        
+
         <label class="field">
           <span class="field__label">Email</span>
           <input class="field__input" type="email" name="email" placeholder="Email" autocomplete="email" required data-email />
@@ -33,7 +46,8 @@
         <label class="field">
           <span class="field__label">Password</span>
           <input class="field__input" type="password" name="password" placeholder="Password"
-                 autocomplete="new-password" required data-pw />
+                autocomplete="new-password" required data-pw minlength="8" aria-describedby="pw-help"/>
+          <small id="pw-help" class="field__error" data-pw-error aria-live="polite"></small>
         </label>
 
         <label class="field">
@@ -60,7 +74,7 @@
           </span>
         </label>
 
-        <button class="btn-auth" type="submit" data-continue disabled>Continue</button>
+        <button class="btn-auth" type="submit" data-continue>Continue</button>
 
         <div class="auth__bottom">
           <a class="auth__back" href="{{ url_for('main.home') }}">← Go back to the website</a>
