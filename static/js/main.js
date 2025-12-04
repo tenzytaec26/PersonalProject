@@ -1,16 +1,23 @@
+// static/js/main.js
+
 document.addEventListener("DOMContentLoaded", () => {
-  // mobile menu
+  // Mobile menu toggle
   const burger = document.querySelector("[data-burger]");
   const mobileNav = document.querySelector("[data-mobile-nav]");
   burger?.addEventListener("click", () => {
-    const open = mobileNav.getAttribute("data-open") === "true";
-    mobileNav.setAttribute("data-open", String(!open));
-    burger.setAttribute("aria-expanded", String(!open));
+    const open = mobileNav?.getAttribute("data-open") === "true";
+    mobileNav?.setAttribute("data-open", String(!open));
+    burger?.setAttribute("aria-expanded", String(!open));
   });
 
-  // home carousel only if exists
+  // Home demo carousel (hero right card)
   bindHomeDemoControls();
+
+  // Spotlight carousel (big turquoise section)
   bindSpotlightCarousel();
+
+  // Events explorer filters (category/type/date/search)
+  bindEventsExplorerFilters();
 });
 
 function bindHomeDemoControls() {
@@ -22,21 +29,42 @@ function bindHomeDemoControls() {
   if (!prev || !next || !title || !desc || !img) return;
 
   const items = [
-    { title: "Paro Tshechu", desc: "A vibrant festival in Paro.", img: "..." },
-    { title: "Tiger’s Nest", desc: "Cliffside monastery views.", img: "..." },
-    { title: "Thimphu Market", desc: "Local crafts and food.", img: "..." },
+    {
+      title: "Paro Tshechu",
+      desc: "A vibrant festival in Paro.",
+      img: "https://images.unsplash.com/photo-1528127269322-539801943592?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      title: "Tiger’s Nest",
+      desc: "Cliffside monastery views.",
+      img: "https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1200&q=70",
+    },
+    {
+      title: "Thimphu Market",
+      desc: "Local crafts and food.",
+      img: "https://images.unsplash.com/photo-1526481280695-3c687fd643ed?auto=format&fit=crop&w=1200&q=70",
+    },
   ];
 
   let idx = 0;
+
   const render = () => {
-    title.textContent = items[idx].title;
-    desc.textContent = items[idx].desc;
-    img.src = items[idx].img;
-    img.alt = items[idx].title;
+    const it = items[idx];
+    title.textContent = it.title;
+    desc.textContent = it.desc;
+    img.src = it.img;
+    img.alt = it.title;
   };
 
-  prev.addEventListener("click", () => { idx = (idx - 1 + items.length) % items.length; render(); });
-  next.addEventListener("click", () => { idx = (idx + 1) % items.length; render(); });
+  prev.addEventListener("click", () => {
+    idx = (idx - 1 + items.length) % items.length;
+    render();
+  });
+
+  next.addEventListener("click", () => {
+    idx = (idx + 1) % items.length;
+    render();
+  });
 
   render();
 }
@@ -92,10 +120,11 @@ function bindSpotlightCarousel() {
   function render() {
     const s = slides[idx];
     els.title.textContent = s.title;
-    els.desc.textContent = s.desc;
-    els.category.textContent = s.category;
+    if (els.desc) els.desc.textContent = s.desc;
+    if (els.category) els.category.textContent = s.category;
     els.img.src = s.img;
     els.img.alt = s.title;
+
     if (els.dateTop) els.dateTop.textContent = s.dateTop;
     if (els.dateMid) els.dateMid.textContent = s.dateMid;
     if (els.dateBot) els.dateBot.textContent = s.dateBot;
@@ -105,12 +134,20 @@ function bindSpotlightCarousel() {
     active?.classList.add("is-active");
   }
 
-  els.prev.addEventListener("click", () => { idx = (idx - 1 + slides.length) % slides.length; render(); });
-  els.next.addEventListener("click", () => { idx = (idx + 1) % slides.length; render(); });
+  els.prev.addEventListener("click", () => {
+    idx = (idx - 1 + slides.length) % slides.length;
+    render();
+  });
+
+  els.next.addEventListener("click", () => {
+    idx = (idx + 1) % slides.length;
+    render();
+  });
 
   els.thumbs.forEach((t) => {
     t.addEventListener("click", () => {
       idx = Number(t.dataset.sThumb);
+      if (!Number.isFinite(idx)) idx = 0;
       render();
     });
   });
@@ -118,153 +155,196 @@ function bindSpotlightCarousel() {
   render();
 }
 
-(() => {
+function bindEventsExplorerFilters() {
   const explorer = document.querySelector("[data-events-explorer]");
   if (!explorer) return;
 
-  const countEl = explorer.querySelector("[data-events-count]") || document.querySelector("[data-events-count]");
+  const countEl = explorer.querySelector("[data-events-count]");
   const searchEl = explorer.querySelector("[data-search]");
-  const cards = () => Array.from(document.querySelectorAll(".cards .event-card"));
+  const datePicker = explorer.querySelector("[data-date-picker]");
 
   const state = {
-    categories: new Set(),
-    type: "all",   // all|free|paid
-    date: "all",   // all|today|week|next30|next3m|next6m
+    categories: new Set(), // lowercased values
+    type: "all", // all|free|paid
+    date: "all", // all|today|week|next30|next3m|next6m|custom
+    customDate: null, // Date (local midnight)
     q: "",
   };
 
-  // --- helpers ---
-  const toLower = (s) => (s || "").toString().toLowerCase();
+  const norm = (s) => (s || "").toString().toLowerCase().trim();
 
-  function parseISODate(s) {
-    // Expects YYYY-MM-DD
-    if (!s) return null;
-    const [y, m, d] = s.split("-").map(Number);
-    if (!y || !m || !d) return null;
-    return new Date(y, m - 1, d);
-  }
+  // Parse YYYY-MM-DD into a *local* Date at midnight (avoids timezone surprises)
+  const parseISO = (iso) => {
+    const m = String(iso || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return null;
+    const y = Number(m[1]), mo = Number(m[2]) - 1, d = Number(m[3]);
+    return new Date(y, mo, d);
+  };
 
-  function inDateBucket(eventDate, bucket) {
-    if (bucket === "all") return true;
-    if (!eventDate) return false;
+  const startOfDay = (d) => new Date(d.getFullYear(), d.getMonth(), d.getDate());
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+  const addDays = (d, n) => {
+    const copy = new Date(d);
+    copy.setDate(copy.getDate() + n);
+    return copy;
+  };
 
-    const end = new Date(today);
-    if (bucket === "today") {
-      return eventDate.getTime() === today.getTime();
+  const addMonths = (d, n) => {
+    const copy = new Date(d);
+    copy.setMonth(copy.getMonth() + n);
+    return copy;
+  };
+
+  function datePass(cardDateISO) {
+    if (state.date === "all") return true;
+
+    const cardDate = parseISO(cardDateISO);
+    if (!cardDate) return false;
+
+    const today = startOfDay(new Date());
+
+    if (state.date === "custom" && state.customDate) {
+      return cardDate.getTime() === state.customDate.getTime();
     }
-    if (bucket === "week") {
-      end.setDate(end.getDate() + 7);
-      return eventDate >= today && eventDate <= end;
-    }
-    if (bucket === "next30") {
-      end.setDate(end.getDate() + 30);
-      return eventDate >= today && eventDate <= end;
-    }
-    if (bucket === "next3m") {
-      end.setDate(end.getDate() + 90);
-      return eventDate >= today && eventDate <= end;
-    }
-    if (bucket === "next6m") {
-      end.setDate(end.getDate() + 180);
-      return eventDate >= today && eventDate <= end;
-    }
-    return true;
+
+    let end;
+    if (state.date === "today") end = addDays(today, 1);
+    else if (state.date === "week") end = addDays(today, 7);
+    else if (state.date === "next30") end = addDays(today, 30);
+    else if (state.date === "next3m") end = addMonths(today, 3);
+    else if (state.date === "next6m") end = addMonths(today, 6);
+    else return true;
+
+    return cardDate >= today && cardDate < end;
   }
 
   function setActive(groupName, clickedBtn) {
-    // For date you have multiple rows; handle all rows with same group
-    document.querySelectorAll(`[data-filter-group="${groupName}"] .seg`).forEach((b) => {
-      b.classList.remove("is-active");
+    explorer.querySelectorAll(`[data-filter-group="${groupName}"] .seg`).forEach((b) => {
+      b.classList.toggle("is-active", b === clickedBtn);
     });
-    clickedBtn.classList.add("is-active");
+  }
+
+  function getCards() {
+    return Array.from(explorer.querySelectorAll(".cards .event-card"));
   }
 
   function applyFilters() {
-    let shown = 0;
+    const cards = getCards();
+    let visible = 0;
+    const q = norm(state.q);
 
-    const q = toLower(state.q);
-
-    for (const card of cards()) {
+    for (const card of cards) {
       const tags = (card.dataset.tags || "")
         .split(",")
-        .map((t) => t.trim())
+        .map((t) => norm(t))
         .filter(Boolean);
 
-      const type = toLower(card.dataset.type || "all");
-      const eventDate = parseISODate(card.dataset.date);
+      const type = norm(card.dataset.type || "paid");
+      const iso = card.dataset.date;
 
-      // Category: if none selected -> pass, else must match at least one
-      const categoryPass =
+      // Categories: if none selected -> pass; else match any
+      const catPass =
         state.categories.size === 0 ||
         tags.some((t) => state.categories.has(t));
 
-      // Type: all/free/paid
-      const typePass =
-        state.type === "all" ||
-        (state.type === "free" && type === "free") ||
-        (state.type === "paid" && type === "paid");
+      // Type
+      const typePass = state.type === "all" || type === state.type;
 
       // Date bucket
-      const datePass = inDateBucket(eventDate, state.date);
+      const dateOk = datePass(iso);
 
-      // Search: match title/location/text
-      const text = toLower(card.textContent);
-      const searchPass = !q || text.includes(q);
+      // Search against visible text (title, location, tags)
+      const title = norm(card.querySelector("h4")?.textContent);
+      const loc = norm(card.querySelector(".event-card__loc")?.textContent);
+      const hay = `${title} ${loc} ${tags.join(" ")}`;
+      const searchOk = !q || hay.includes(q);
 
-      const visible = categoryPass && typePass && datePass && searchPass;
-
-      card.style.display = visible ? "" : "none";
-      if (visible) shown += 1;
+      const show = catPass && typePass && dateOk && searchOk;
+      card.style.display = show ? "" : "none";
+      if (show) visible++;
     }
 
-    if (countEl) countEl.textContent = String(shown);
+    if (countEl) countEl.textContent = String(visible);
   }
 
-  // --- listeners ---
-
-  // Category checkboxes
+  // ---- Category checkboxes (event delegation) ----
   explorer.addEventListener("change", (e) => {
     const el = e.target;
+    if (!(el instanceof HTMLInputElement)) return;
+
+    // Important: your HTML uses name="category" (all lowercase)
     if (el.matches('input[type="checkbox"][name="category"]')) {
-      if (el.checked) state.categories.add(el.value);
-      else state.categories.delete(el.value);
+      const v = norm(el.value);
+      if (!v) return;
+      if (el.checked) state.categories.add(v);
+      else state.categories.delete(v);
       applyFilters();
     }
   });
 
-  // Type/date segmented buttons
+  // ---- Type + Date segmented buttons (event delegation) ----
   explorer.addEventListener("click", (e) => {
     const btn = e.target.closest("button.seg");
     if (!btn) return;
 
+    // Type
     if (btn.dataset.type) {
-      state.type = btn.dataset.type;
+      state.type = norm(btn.dataset.type) || "all";
       setActive("type", btn);
       applyFilters();
+      return;
     }
 
+    // Date buckets
     if (btn.dataset.date) {
-      state.date = btn.dataset.date;
+      state.date = norm(btn.dataset.date) || "all";
+      state.customDate = null;
+
+      // If user clicks a bucket, clear the date picker value (optional but nice)
+      if (datePicker) datePicker.value = "";
+
       setActive("date", btn);
       applyFilters();
+      return;
     }
   });
 
-  // Search (debounced)
-  let t = null;
+  // ---- Date picker (exact date) ----
+  if (datePicker) {
+    datePicker.addEventListener("change", () => {
+      const d = parseISO(datePicker.value);
+      if (!d) {
+        // cleared
+        state.customDate = null;
+        state.date = "all";
+        // set "All" active if possible
+        const allBtn = explorer.querySelector('[data-filter-group="date"] .seg[data-date="all"]');
+        if (allBtn) setActive("date", allBtn);
+        applyFilters();
+        return;
+      }
+
+      state.customDate = d;
+      state.date = "custom";
+
+      // When using picker, remove active state from segmented buttons
+      explorer.querySelectorAll('[data-filter-group="date"] .seg').forEach((b) => b.classList.remove("is-active"));
+      applyFilters();
+    });
+  }
+
+  // ---- Search ----
   if (searchEl) {
+    let t = null;
     searchEl.addEventListener("input", () => {
       clearTimeout(t);
       t = setTimeout(() => {
         state.q = searchEl.value || "";
         applyFilters();
-      }, 200);
+      }, 150);
     });
   }
 
-  // initial count
+  // Initial render
   applyFilters();
-})();
+}

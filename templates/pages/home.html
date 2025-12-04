@@ -141,6 +141,7 @@
   <div class="explorer__grid">
     <!-- SIDEBAR -->
     <aside class="filters" aria-label="Filters">
+      <!-- CATEGORY -->
       <div class="filters__section">
         <div class="filters__head">
           <h3>Category</h3>
@@ -148,23 +149,24 @@
         </div>
 
         <div class="filters__chips">
-          <label class="check"><input type="checkbox" value="Art & Culture" name="Category"/> <span>Art & Culture</span></label>
-          <label class="check"><input type="checkbox" value="Business" name="category"/> <span>Business</span></label>
-          <label class="check"><input type="checkbox" value="Community" name="category"/> <span>Community</span></label>
-          <label class="check"><input type="checkbox" value="Conference" name="category"/> <span>Conference</span></label>
-          <label class="check"><input type="checkbox" value="Entertainment" name="category"/> <span>Entertainment</span></label>
-          <label class="check"><input type="checkbox" value="Events" name="category"/> <span>Events</span></label>
-          <label class="check"><input type="checkbox" value="Exhibition" name="category"/> <span>Exhibition</span></label>
-          <label class="check"><input type="checkbox" value="Family" name="category"/> <span>Family</span></label>
-          <label class="check"><input type="checkbox" value="Festival" name="category"/> <span>Festival</span></label>
-          <label class="check"><input type="checkbox" value="Food & Beverage" name="category"/> <span>Food & Beverage</span></label>
-          <label class="check"><input type="checkbox" value="Lifestyle" name="category"/> <span>Lifestyle</span></label>
-          <label class="check"><input type="checkbox" value="Music" name="category"/> <span>Music</span></label>
-          <label class="check"><input type="checkbox" value="Shopping" name="category"/> <span>Shopping</span></label>
-          <label class="check"><input type="checkbox" value="Sports" name="category"/> <span>Sports</span></label>
+          <label class="check"><input type="checkbox" value="Art & Culture" name="category" /> <span>Art & Culture</span></label>
+          <label class="check"><input type="checkbox" value="Business" name="category" /> <span>Business</span></label>
+          <label class="check"><input type="checkbox" value="Community" name="category" /> <span>Community</span></label>
+          <label class="check"><input type="checkbox" value="Conference" name="category" /> <span>Conference</span></label>
+          <label class="check"><input type="checkbox" value="Entertainment" name="category" /> <span>Entertainment</span></label>
+          <label class="check"><input type="checkbox" value="Events" name="category" /> <span>Events</span></label>
+          <label class="check"><input type="checkbox" value="Exhibition" name="category" /> <span>Exhibition</span></label>
+          <label class="check"><input type="checkbox" value="Family" name="category" /> <span>Family</span></label>
+          <label class="check"><input type="checkbox" value="Festival" name="category" /> <span>Festival</span></label>
+          <label class="check"><input type="checkbox" value="Food & Beverage" name="category" /> <span>Food & Beverage</span></label>
+          <label class="check"><input type="checkbox" value="Lifestyle" name="category" /> <span>Lifestyle</span></label>
+          <label class="check"><input type="checkbox" value="Music" name="category" /> <span>Music</span></label>
+          <label class="check"><input type="checkbox" value="Shopping" name="category" /> <span>Shopping</span></label>
+          <label class="check"><input type="checkbox" value="Sports" name="category" /> <span>Sports</span></label>
         </div>
       </div>
 
+      <!-- TYPE -->
       <div class="filters__section">
         <div class="filters__head">
           <h3>Type</h3>
@@ -176,33 +178,33 @@
           <button class="seg" type="button" data-type="free">Free</button>
           <button class="seg" type="button" data-type="paid">Paid</button>
         </div>
-
       </div>
 
-      <div class="filters__section">
+      <!-- DATE (single correct section; NOT nested) -->
+      <div class="filters__section" data-filter-group="date">
         <div class="filters__head">
           <h3>Date</h3>
           <span class="filters__chev">^</span>
         </div>
 
         <label class="date-input">
-          <input type="text" placeholder="Select a date" />
+          <input type="date" data-date-picker />
           <span>📅</span>
         </label>
 
-        <div class="type-row" data-filter-group="date">
-          <button class="seg is-active" type="button">All</button>
-          <button class="seg" type="button">Today</button>
-          <button class="seg" type="button">This week</button>
+        <div class="type-row">
+          <button class="seg is-active" type="button" data-date="all">All</button>
+          <button class="seg" type="button" data-date="today">Today</button>
+          <button class="seg" type="button" data-date="week">This week</button>
         </div>
 
-        <div class="type-row" date-filter-group="date">
-          <button class="seg" type="button">Next 30 days</button>
-          <button class="seg" type="button">Next 3 months</button>
+        <div class="type-row">
+          <button class="seg" type="button" data-date="next30">Next 30 days</button>
+          <button class="seg" type="button" data-date="next3m">Next 3 months</button>
         </div>
 
-        <div class="type-row" date-filter-group="date">
-          <button class="seg" type="button">Next 6 months</button>
+        <div class="type-row">
+          <button class="seg" type="button" data-date="next6m">Next 6 months</button>
         </div>
       </div>
 
